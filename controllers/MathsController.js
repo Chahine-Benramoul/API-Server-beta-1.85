@@ -9,7 +9,7 @@ export default class MathsController extends Controller {
         console.log("LA CLASSE MATHS CONTROLLER ACTUEL");
         console.log(params);
         switch (params.op) {
-            case null:
+            case undefined:
                 let url = './wwwroot/' + this.HttpContext.path.controllerName + '.html';
                 if (url) {
                     fs.readFile(url, (error, data) => {
@@ -43,8 +43,32 @@ export default class MathsController extends Controller {
                 this.HttpContext.response.JSON({ ...params, value: e });
                 break;
             case '!':
-                let f = !parseInt(params.n);
+                let f = 1;
+                for (let x = 1;  x < parseInt(params.n); x++) {
+                    f = f * (x+1);
+                }
                 this.HttpContext.response.JSON({ ...params, value: f });
+                break;
+            case 'p':
+                let g = parseInt(params.n);
+                let value = true;
+                for (let x = 2;  x <= parseInt(params.n); x++) {
+                    if(g % x == 0 && g != x)
+                        value = false
+                }
+                this.HttpContext.response.JSON({ ...params, value: value });
+                break;
+            case 'np':
+                //let h = parseInt(params.n);
+                let valueH;
+                let n = parseInt(params.n);
+                for (let x = 1;  x <= n ; x++) {
+                    for (let y = 1;  y <= x; y++) {
+                        if(x % y != 0 && x != y)
+                            valueH = x
+                    }
+                }
+                this.HttpContext.response.JSON({ ...params, value: valueH });
                 break;
             default:
                 break;
