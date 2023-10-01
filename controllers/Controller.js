@@ -18,8 +18,23 @@ export default class Controller {
             else
                 this.HttpContext.response.JSON(this.repository.getAll());
         }
-        else
-            this.HttpContext.response.notImplemented();
+        else {
+            
+            // let url = './wwwroot/' + this.HttpContext.path.controllerName+'.html';
+            // if(url){
+            //     fs.readFile(url,(error,data) =>{
+            //         if (error) throw error;
+            //         let pageHtml = Buffer.from(data).toString();
+            //         console.log(pageHtml);
+            //         this.HttpContext.response.HTML(pageHtml);
+            //     });
+            // }
+
+            this.HttpContext.response.notFound();
+
+
+        }
+
     }
     post(data) {
         data = this.repository.add(data);

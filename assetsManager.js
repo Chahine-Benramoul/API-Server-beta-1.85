@@ -31,3 +31,5 @@ export function addHostReference(asset) {
     let host = HttpContext.get().host;
     return `${host}/${assetsRepository}/${asset}`;
 }
+
+

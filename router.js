@@ -1,7 +1,8 @@
 export const API_EndPoint = async function (HttpContext) {
     if (!HttpContext.path.isAPI) {
         return false;
-    } else {
+    }
+    else {
         let controllerName = HttpContext.path.controllerName;
         if (controllerName != undefined) {
             try {
@@ -13,7 +14,10 @@ export const API_EndPoint = async function (HttpContext) {
                 let controller = new Controller(HttpContext);
                 switch (HttpContext.req.method) {
                     case 'GET':
-                        controller.get(HttpContext.path.id);
+                        if(controllerName == "MathsController")
+                            controller.get(HttpContext.path.params);
+                        else
+                            controller.get(HttpContext.path.id);
                         return true;
                     case 'POST':
                         if (HttpContext.payload)
@@ -26,7 +30,7 @@ export const API_EndPoint = async function (HttpContext) {
                             controller.put(HttpContext.payload);
                         else
                             HttpContext.response.unsupported();
-                            return true;
+                        return true;
                     case 'DELETE':
                         controller.remove(HttpContext.path.id);
                         return true;
@@ -47,3 +51,37 @@ export const API_EndPoint = async function (HttpContext) {
         }
     }
 }
+// export const API_Math = async function (HttpContext) {
+//     if (!HttpContext.path.isAPI) {
+//         return false;
+//     } else {
+//         let controllerName = HttpContext.path.controllerName;
+//         if (controllerName === "MathsController") {
+//             try {
+//                 // dynamically import the targeted controller
+//                 // if the controllerName does not exist the catch section will be called
+//                 const { default: Controller } = (await import('./controllers/' + controllerName + '.js'));
+
+//                 // instanciate the controller       
+//                 let controller = new Controller(HttpContext);
+//                 switch (HttpContext.req.method) {
+//                     case 'GET':
+//                         controller.get(HttpContext.path.params);
+//                         return true;
+//                     default:
+//                         HttpContext.response.notImplemented();
+//                         return true;
+//                 }
+//             } catch (error) {
+//                 console.log("API_Math Error message: \n", error.message);
+//                 console.log("Stack: \n", error.stack);
+//                 HttpContext.response.notFound();
+//                 return true;
+//             }
+//         } else {
+//             // not an API endpoint
+//             // must be handled by another middleware
+//             return false;
+//         }
+//     }
+// }
