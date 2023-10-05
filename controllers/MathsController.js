@@ -6,14 +6,10 @@ export default class MathsController extends Controller {
         super(HttpContext);
     }
     get(rawParams = null) {
-        console.log("LA CLASSE MATHS CONTROLLER ACTUEL");
+
         let params = convertKeysToLowerCase(rawParams);
         let paramsLength = findNumberOfParams(rawParams);
         let response;
-        // if (paramsLength > 3) {
-        //     console.log(findNumberOfParams(rawParams));
-        //     this.HttpContext.response.JSON({ ...params, error: 'too many parameters' });
-        // }
 
         console.log(params);
         switch (params.op) {
@@ -27,7 +23,6 @@ export default class MathsController extends Controller {
                         fs.readFile(url, (error, data) => {
                             if (error) throw error;
                             let pageHtml = Buffer.from(data).toString();
-                            //console.log(pageHtml);
                             this.HttpContext.response.HTML(pageHtml);
                         });
                     } else {

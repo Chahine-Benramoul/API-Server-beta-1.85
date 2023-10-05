@@ -35,7 +35,7 @@ export function handleStaticResourceRequest(HttpContext) {
     let contentType = extToContentType(filePath);
     try {
         let content = fs.readFileSync(filePath);
-        console.log(contentType, filePath);
+        //console.log(contentType, filePath);
         return HttpContext.response.content(contentType, content);
     } catch (error) {
         if (error.code === 'ENOENT')
